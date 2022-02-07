@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  productservice:
+    build: ProductService/
+    ports:
+      - "22577:80"
+      - "44333:443"
