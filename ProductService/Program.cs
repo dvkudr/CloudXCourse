@@ -30,4 +30,7 @@ app
     })
     .WithName("get_product");
 
+app
+    .MapGet("/healthcheck", () => Results.Ok());
+
 app.Run();
