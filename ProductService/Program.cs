@@ -1,7 +1,28 @@
 using System.Collections.Concurrent;
+using OpenTelemetry;
+using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+Sdk.CreateTracerProviderBuilder()
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("product-service").AddTelemetrySdk())
+    .AddXRayTraceId()
+    .AddAWSInstrumentation()
+    .AddAspNetCoreInstrumentation()
+    .AddHttpClientInstrumentation()
+    .AddOtlpExporter(options =>
+    {
+        options.Endpoint = new Uri(Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT"));
+    })
+    .Build();
+
+Sdk.SetDefaultTextMapPropagator(new AWSXRayPropagator());
+
 var app = builder.Build();
 
 var products = new ConcurrentDictionary<string, Product>();
