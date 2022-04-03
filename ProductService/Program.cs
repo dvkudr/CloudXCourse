@@ -30,6 +30,7 @@ var products = new ConcurrentDictionary<string, Product>();
 app
     .MapPut("/product/{ID}/add", (string id) =>
     {
+        FindPrimeNumber.Run(100000);
         var product = new Product{ Id = id };
         if (products.TryAdd(id, product))
         {
@@ -42,6 +43,7 @@ app
 app
     .MapGet("/product/{ID}", (string id) =>
     {
+        FindPrimeNumber.Run(100000);
         if (products.TryGetValue(id, out var product))
         {
             return Results.Ok(product);
