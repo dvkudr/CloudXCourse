@@ -22,5 +22,5 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.name=product-service
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel:4317
     ports:
-      - "22577:80"
-      - "44333:443"
+      - "80:80"
+      - "443:443"
