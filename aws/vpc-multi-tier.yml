@@ -138,7 +138,7 @@ Parameters:
 
   pNumAzs:
     Type: String
-    Default: 3
+    Default: 2
     Description: Number of subnets for each tier
     AllowedValues:
     - 1
@@ -154,13 +154,13 @@ Parameters:
   pCreateNatGateway:
     Type: String
     Description: Whether NAT Gateways should be created
-    Default: true
+    Default: false
     AllowedValues: [true, false]
 
   pCreateSingleNatGateway:
     Type: String
     Description: Single NAT Gateway in 1st public subnet or NAT Gateway in each public subnet
-    Default: true
+    Default: false
     AllowedValues: [true, false]
 
   pTier1Create:
