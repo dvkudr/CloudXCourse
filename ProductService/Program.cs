@@ -1,19 +1,18 @@
-using System.Collections.Concurrent;
 using OpenTelemetry;
 using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using ProductService;
+using ProductService.Products;
 
 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-
-var products = new ConcurrentDictionary<string, Product>();
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
+
+builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
 
 var app = builder.Build();
 
@@ -45,26 +44,22 @@ if (app.Environment.IsDevelopment())
 }
 
 app
-    .MapPut("/product/{ID}/add", (string id) =>
+    .MapPut("/product/{ID}/add", (string id, IProductRepository productRepository) =>
     {
         var product = new Product{ Id = id };
-        if (products.TryAdd(id, product))
-        {
-            return Results.CreatedAtRoute("get_product", new { id });
-        }
-
-        return Results.Conflict();
-    });
+        return productRepository.Create(product)
+            ? Results.CreatedAtRoute("get_product", new { id })
+            : Results.Conflict();
+    })
+    .WithName("create_product");
 
 app
-    .MapGet("/product/{ID}", (string id) =>
+    .MapGet("/product/{ID}", (string id, IProductRepository productRepository) =>
     {
-        if (products.TryGetValue(id, out var product))
-        {
-            return Results.Ok(product);
-        }
-
-        return Results.NotFound();
+        var product = productRepository.Get(id);
+        return product != null
+            ? Results.Ok(product)
+            : Results.NotFound();
     })
     .WithName("get_product");
 

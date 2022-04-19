@@ -1,4 +1,4 @@
-namespace ProductService;
+namespace ProductService.Products;
 
 public class Product
 {
