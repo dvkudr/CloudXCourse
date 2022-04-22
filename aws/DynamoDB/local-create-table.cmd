@@ -1,0 +1,1 @@
+aws dynamodb create-table --table-name products --attribute-definitions AttributeName=Id,AttributeType=S --key-schema AttributeName=Id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --profile participant --endpoint-url http://localhost:8000

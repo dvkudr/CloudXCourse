@@ -9,7 +9,13 @@ internal static class ServiceCollectionExtensions
         {
             case "InMemory":
                 services
-                    .AddSingleton<IProductRepository, InMemoryProductRepository>();
+                    .AddSingleton<IProductRepository>(new InMemoryProductRepository());
+                break;
+            case "DynamoDB":
+                var dynamoDbConfig = configuration.GetSection("DynamoDB");
+                var serviceUrl = dynamoDbConfig?["ServiceUrl"];
+                services
+                    .AddSingleton<IProductRepository>(new DynamoDbProductRepository(serviceUrl));
                 break;
         }
 

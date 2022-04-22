@@ -6,15 +6,19 @@ internal class InMemoryProductRepository : IProductRepository
 {
     private readonly ConcurrentDictionary<string, Product> _products = new ();
 
-    public Product Get(string id)
+    public Task<Product> Get(string id, CancellationToken cancellationToken)
     {
-        return _products.TryGetValue(id, out var product)
+        var result = _products.TryGetValue(id, out var product)
             ? product
             : null;
+
+        return Task.FromResult(result);
     }
 
-    public bool Create(Product product)
+    public Task<bool> Create(Product product, CancellationToken cancellationToken)
     {
-        return _products.TryAdd(product.Id, product);
+        var result =  _products.TryAdd(product.Id, product);
+
+        return Task.FromResult(result);
     }
 }

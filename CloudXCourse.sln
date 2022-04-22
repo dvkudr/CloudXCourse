@@ -10,6 +10,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		swagger.json = swagger.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aws", "aws", "{69FFB3AF-0207-442C-B975-C7D27363AD78}"
+	ProjectSection(SolutionItems) = preProject
+		aws\EC2InstanceWithSecurityGroup.yml = aws\EC2InstanceWithSecurityGroup.yml
+		aws\EC2InstanceWithSecurityGroupPrivate.yml = aws\EC2InstanceWithSecurityGroupPrivate.yml
+		aws\vpc-multi-tier.yml = aws\vpc-multi-tier.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamoDB", "DynamoDB", "{1F16794B-7DAD-4273-BA89-9A5BCD553191}"
+	ProjectSection(SolutionItems) = preProject
+		aws\DynamoDB\docker-compose.yml = aws\DynamoDB\docker-compose.yml
+		aws\DynamoDB\local-create-table.cmd = aws\DynamoDB\local-create-table.cmd
+		aws\DynamoDB\table-products.json = aws\DynamoDB\table-products.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,5 +34,9 @@ Global
 		{B317FFF3-0233-4813-80B5-6A3C774E1099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B317FFF3-0233-4813-80B5-6A3C774E1099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B317FFF3-0233-4813-80B5-6A3C774E1099}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69FFB3AF-0207-442C-B975-C7D27363AD78} = {FA32AF34-A3DB-49E1-A7AB-842508A25093}
+		{1F16794B-7DAD-4273-BA89-9A5BCD553191} = {69FFB3AF-0207-442C-B975-C7D27363AD78}
 	EndGlobalSection
 EndGlobal

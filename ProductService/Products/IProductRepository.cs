@@ -2,7 +2,7 @@ namespace ProductService.Products;
 
 public interface IProductRepository
 {
-    Product Get(string id);
+    Task<Product> Get(string id, CancellationToken cancellationToken = default);
 
-    bool Create(Product product);
+    Task<bool> Create(Product product, CancellationToken cancellationToken = default);
 }

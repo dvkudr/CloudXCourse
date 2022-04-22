@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Contrib.Extensions.AWSXRay.Trace;
 using OpenTelemetry.Resources;
@@ -44,19 +45,21 @@ if (app.Environment.IsDevelopment())
 }
 
 app
-    .MapPut("/product/{ID}/add", (string id, IProductRepository productRepository) =>
+    .MapPut("/product/{ID}/add", async (string id, IProductRepository productRepository) =>
     {
+        using var activity = new Activity("add-product");
         var product = new Product{ Id = id };
-        return productRepository.Create(product)
+        return await productRepository.Create(product)
             ? Results.CreatedAtRoute("get_product", new { id })
             : Results.Conflict();
     })
     .WithName("create_product");
 
 app
-    .MapGet("/product/{ID}", (string id, IProductRepository productRepository) =>
+    .MapGet("/product/{ID}", async (string id, IProductRepository productRepository) =>
     {
-        var product = productRepository.Get(id);
+        using var activity = new Activity("get-product");
+        var product = await productRepository.Get(id);
         return product != null
             ? Results.Ok(product)
             : Results.NotFound();
