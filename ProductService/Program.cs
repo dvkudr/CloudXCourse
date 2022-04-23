@@ -13,15 +13,14 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
 
-builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
+//builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
 
 var app = builder.Build();
 
 var config = app.Services.GetRequiredService<IConfiguration>();
-var logger = app.Services.GetRequiredService<ILogger<WebApplication>>();
 foreach (var c in config.AsEnumerable())
 {
-    logger.LogInformation("{Key} = {Value}", c.Key, c.Value);
+    Console.WriteLine($"{c.Key} = {c.Value}");
 }
 
 if (!app.Environment.IsDevelopment())
