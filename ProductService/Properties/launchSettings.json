@@ -14,7 +14,8 @@
       "launchBrowser": false,
       "applicationUrl": "https://localhost:7100;http://localhost:5100",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQLCONNSTR_PRODUCTSERVICE": "server=127.0.0.1;uid=user;pwd=P@ssw0rd;database=cloudx_course"
       }
     },
     "IIS Express": {

@@ -2,7 +2,9 @@ namespace ProductService.Products;
 
 internal static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddProductRepository(this IServiceCollection services, IConfigurationSection configuration)
+    public static IServiceCollection AddProductRepository(this IServiceCollection services,
+        IConfigurationSection configuration,
+        IConfigurationSection connectionStrings)
     {
         var implementation = configuration["Implementation"];
         switch (implementation)
@@ -18,8 +20,7 @@ internal static class ServiceCollectionExtensions
                     .AddSingleton<IProductRepository>(new DynamoDbProductRepository(serviceUrl));
                 break;
             case "MySQL":
-                var mysqlConfig = configuration.GetSection("MySQL");
-                var connectionString = mysqlConfig?["ConnectionString"];
+                var connectionString = connectionStrings["PRODUCTSERVICE"];
                 services
                     .AddSingleton<IProductRepository>(new MySqlProductRepository(connectionString));
                 break;
