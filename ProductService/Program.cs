@@ -13,16 +13,20 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
 
-//builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
+builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
 
 var app = builder.Build();
 
 var config = app.Services.GetRequiredService<IConfiguration>();
 var logger = app.Services.GetRequiredService<ILogger<WebApplication>>();
-foreach (var c in config.AsEnumerable())
+foreach (var c in builder.Configuration.GetSection("ConnectionStrings").AsEnumerable())
 {
     logger.LogError("{Key} = {Value}", c.Key, c.Value);
 }
+/*foreach (var c in config.AsEnumerable())
+{
+    logger.LogError("{Key} = {Value}", c.Key, c.Value);
+}*/
 
 if (!app.Environment.IsDevelopment())
 {
