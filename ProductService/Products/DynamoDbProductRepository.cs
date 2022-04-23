@@ -13,16 +13,16 @@ internal class DynamoDbProductRepository : IProductRepository
         AmazonDynamoDBConfig clientConfig = new AmazonDynamoDBConfig();
         if (!string.IsNullOrEmpty(serviceUrl))
         {
-            clientConfig.ServiceURL = "http://localhost:8000";
+            clientConfig.ServiceURL = serviceUrl;
         }
 
-        _client = new AmazonDynamoDBClient(clientConfig); 
+        _client = new AmazonDynamoDBClient(clientConfig);
     }
 
     public async Task<Product> Get(string id, CancellationToken cancellationToken)
     {
         Table products = Table.LoadTable(_client, _tableName);
-        
+
         GetItemOperationConfig config = new GetItemOperationConfig
         {
             AttributesToGet = new List<string> { "Id" },
@@ -37,6 +37,17 @@ internal class DynamoDbProductRepository : IProductRepository
     public async Task<bool> Create(Product product, CancellationToken cancellationToken)
     {
         Table products = Table.LoadTable(_client, _tableName);
+
+        GetItemOperationConfig config = new GetItemOperationConfig
+        {
+            AttributesToGet = new List<string> { "Id" },
+            ConsistentRead = true
+        };
+        Document existingDocument = await products.GetItemAsync(product.Id, config, cancellationToken);
+        if (existingDocument != null)
+        {
+            return false;
+        }
 
         Document document = new Document();
         document["Id"] = product.Id;

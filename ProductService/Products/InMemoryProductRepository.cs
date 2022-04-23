@@ -17,8 +17,6 @@ internal class InMemoryProductRepository : IProductRepository
 
     public Task<bool> Create(Product product, CancellationToken cancellationToken)
     {
-        var result =  _products.TryAdd(product.Id, product);
-
-        return Task.FromResult(result);
+        return Task.FromResult(_products.TryAdd(product.Id, product));
     }
 }
