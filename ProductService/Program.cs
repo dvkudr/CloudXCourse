@@ -17,6 +17,13 @@ builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductS
 
 var app = builder.Build();
 
+var config = app.Services.GetRequiredService<IConfiguration>();
+
+foreach (var c in config.AsEnumerable())
+{
+    Console.WriteLine(c.Key + " = " + c.Value);
+}
+
 if (!app.Environment.IsDevelopment())
 {
     Sdk.CreateTracerProviderBuilder()
