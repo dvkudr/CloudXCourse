@@ -1,14 +1,13 @@
 version: '3.3'
 services:
   db:
-    image: mysql:5.7.37
-    command: --default-authentication-plugin=mysql_native_password
+    image: mariadb:10.6.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'P@ssw0rd'
-      MYSQL_ROOT_PASSWORD: 'p@ssw0rd'
+      MARIADB_DATABASE: 'db'
+      MARIADB_USER: 'user'
+      MARIADB_PASSWORD: 'P@ssw0rd'
+      MARIADB_ROOT_PASSWORD: 'p@ssw0rd'
     ports:
       - '3306:3306'
     expose:
