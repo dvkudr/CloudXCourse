@@ -18,10 +18,10 @@ builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductS
 var app = builder.Build();
 
 var config = app.Services.GetRequiredService<IConfiguration>();
-
+var logger = app.Services.GetRequiredService<ILogger<WebApplication>>();
 foreach (var c in config.AsEnumerable())
 {
-    Console.WriteLine(c.Key + " = " + c.Value);
+    logger.LogInformation("{Key} = {Value}", c.Key, c.Value);
 }
 
 if (!app.Environment.IsDevelopment())
