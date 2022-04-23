@@ -13,7 +13,7 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
 
-builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
+//builder.Services.AddProductRepository(builder.Configuration.GetSection("ProductService:ProductRepository"));
 
 var app = builder.Build();
 
