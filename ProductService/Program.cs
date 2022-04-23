@@ -27,7 +27,12 @@ if (!app.Environment.IsDevelopment())
         .AddAWSInstrumentation()
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
-        .AddSqlClientInstrumentation()
+        .AddSqlClientInstrumentation(
+            options =>
+            {
+                options.SetDbStatementForStoredProcedure = true;
+                options.SetDbStatementForText = true;
+            })
         .AddOtlpExporter(options =>
         {
             options.Endpoint = new Uri(Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT"));
