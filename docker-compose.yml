@@ -18,6 +18,7 @@ services:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
       - AWS_REGION=us-east-1
+      - MYSQLCONNSTR_PRODUCTSERVICE
       - INSTANCE_ID
       - OTEL_RESOURCE_ATTRIBUTES=service.name=product-service
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel:4317

@@ -13,20 +13,11 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
 
-
-
-/*builder.Services.AddProductRepository(
+builder.Services.AddProductRepository(
     builder.Configuration.GetSection("ProductService:ProductRepository"),
-    builder.Configuration.GetSection("ConnectionStrings"));*/
+    builder.Configuration.GetSection("ConnectionStrings"));
 
 var app = builder.Build();
-
-var connectionStrings = app.Services.GetRequiredService<IConfiguration>().GetSection("ConnectionStrings");
-var logger = app.Services.GetRequiredService<ILogger<WebApplication>>();
-foreach (var c in connectionStrings.AsEnumerable())
-{
-    logger.LogError("{Key} = {Value}", c.Key, c.Value);
-}
 
 if (!app.Environment.IsDevelopment())
 {
