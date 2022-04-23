@@ -17,6 +17,12 @@ internal static class ServiceCollectionExtensions
                 services
                     .AddSingleton<IProductRepository>(new DynamoDbProductRepository(serviceUrl));
                 break;
+            case "MySQL":
+                var mysqlConfig = configuration.GetSection("MySQL");
+                var connectionString = mysqlConfig?["ConnectionString"];
+                services
+                    .AddSingleton<IProductRepository>(new MySqlProductRepository(connectionString));
+                break;
         }
 
         return services;

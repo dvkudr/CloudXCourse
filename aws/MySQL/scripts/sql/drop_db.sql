@@ -1,0 +1,1 @@
+DROP DATABASE cloudx_course;
